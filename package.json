@@ -1,0 +1,10 @@
+{
+  "name": "fitness-webflow-standard",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node server.mjs",
+    "preview": "node server.mjs",
+    "check": "node check.mjs"
+  }
+}
