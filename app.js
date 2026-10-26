@@ -10,14 +10,32 @@ const motion=matchMedia('(prefers-reduced-motion: reduce)');
 document.querySelectorAll('[data-program]').forEach(button=>button.addEventListener('click',()=>{document.querySelectorAll('input[name="program"]').forEach(input=>input.checked=input.value===button.dataset.program);document.querySelector('#start').scrollIntoView({behavior:motion.matches?'instant':'smooth'});}));
 document.querySelector('#contact-form').addEventListener('submit',event=>{event.preventDefault();const status=document.querySelector('#form-status');status.textContent='Demo complete. Your selected format is '+new FormData(event.currentTarget).get('program')+'. No information was sent or saved.';status.classList.add('success');});
 const dialog=document.querySelector('#media-dialog');const content=document.querySelector('#viewer-content');const caption=document.querySelector('#viewer-caption');const previous=document.querySelector('#previous-photo');const next=document.querySelector('#next-photo');const photos=[...document.querySelectorAll('[data-photo]')];let photoIndex=0;let opener;
-function showPhoto(index){photoIndex=(index+photos.length)%photos.length;const photo=photos[photoIndex];const image=document.createElement('img');image.src=photo.dataset.photo;image.alt=photo.dataset.caption;content.replaceChildren(image);caption.textContent=photo.dataset.caption+' · '+(photoIndex+1)+' / '+photos.length;}
+function showPhoto(index){photoIndex=(index+photos.length)%photos.length;const photo=photos[photoIndex];const image=document.createElement('img');image.src=photo.dataset.photo;image.alt=photo.dataset.caption;image.draggable=false;content.classList.add('photo-mode');content.replaceChildren(image);caption.textContent=photo.dataset.caption+' · '+(photoIndex+1)+' / '+photos.length;}
 function openViewer(source){opener=source;dialog.showModal();document.querySelector('#close-viewer').focus();}
 photos.forEach((photo,index)=>photo.addEventListener('click',()=>{previous.hidden=false;next.hidden=false;showPhoto(index);openViewer(photo);}));
 previous.addEventListener('click',()=>showPhoto(photoIndex-1));next.addEventListener('click',()=>showPhoto(photoIndex+1));
+const galleryPointers=new Set();let galleryGesture=null;
+function resetGalleryGesture(){galleryPointers.clear();galleryGesture=null;}
+content.addEventListener('pointerdown',event=>{
+  if(event.pointerType==='mouse'||!content.querySelector('img'))return;
+  galleryPointers.add(event.pointerId);
+  if(galleryPointers.size!==1||(window.visualViewport?.scale||1)>1.01){galleryGesture=null;return;}
+  galleryGesture={id:event.pointerId,x:event.clientX,y:event.clientY};
+});
+content.addEventListener('pointerup',event=>{
+  galleryPointers.delete(event.pointerId);const gesture=galleryGesture;
+  galleryGesture=null;
+  if(!gesture||gesture.id!==event.pointerId||galleryPointers.size||!dialog.open||!content.querySelector('img'))return;
+  const dx=event.clientX-gesture.x,dy=event.clientY-gesture.y;
+  const threshold=Math.max(40,Math.min(80,content.clientWidth*.12));
+  if(Math.abs(dx)>=threshold&&Math.abs(dx)>Math.abs(dy)*1.4)showPhoto(photoIndex+(dx<0?1:-1));
+});
+content.addEventListener('pointercancel',event=>{galleryPointers.delete(event.pointerId);galleryGesture=null;});
+window.addEventListener('blur',resetGalleryGesture);
 document.querySelector('#close-viewer').addEventListener('click',()=>dialog.close());
 dialog.addEventListener('click',event=>{if(event.target===dialog){const rect=dialog.getBoundingClientRect();if(event.clientX<rect.left||event.clientX>rect.right||event.clientY<rect.top||event.clientY>rect.bottom)dialog.close();}});
 dialog.addEventListener('keydown',event=>{if(content.querySelector('img')&&['ArrowRight','ArrowLeft'].includes(event.key)){event.preventDefault();showPhoto(photoIndex+(event.key==='ArrowRight'?1:-1));}});
-dialog.addEventListener('close',()=>{const video=content.querySelector('video');if(video)video.pause();content.replaceChildren();opener?.focus({preventScroll:true});});
+dialog.addEventListener('close',()=>{resetGalleryGesture();const video=content.querySelector('video');if(video)video.pause();content.classList.remove('photo-mode');content.replaceChildren();opener?.focus({preventScroll:true});});
 document.querySelector('#watch-video').addEventListener('click',event=>{const video=document.createElement('video');video.controls=true;video.playsInline=true;video.src='assets/running-under-bridg-transcode.mp4';video.poster='assets/running-under-bridg-poster-00001.jpg';content.replaceChildren(video);previous.hidden=true;next.hidden=true;caption.textContent='A moment in motion · Original Fitness footage';openViewer(event.currentTarget);video.play().catch(()=>{});});
 const links=[...navigation.querySelectorAll('a[href^="#"]')];const observer=new IntersectionObserver(entries=>{entries.forEach(entry=>{if(entry.isIntersecting)links.forEach(link=>{const active=link.hash==='#'+entry.target.id;link.classList.toggle('active',active);if(active)link.setAttribute('aria-current','location');else link.removeAttribute('aria-current');});});},{rootMargin:'-20% 0px -60% 0px',threshold:0});
 document.querySelectorAll('main section[id]').forEach(section=>observer.observe(section));
