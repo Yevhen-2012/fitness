@@ -26,7 +26,7 @@ jobs:
       - name: Prepare static landing
         run: |
           mkdir _site
-          cp -R index.html about.html 404.html style.css app.js assets .nojekyll _site/
+          cp -R index.html about.html 404.html style.css typography.css app.js assets .nojekyll _site/
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site

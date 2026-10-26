@@ -1,0 +1,82 @@
+/* Approved Fitness type scale. All ranges use CSS viewport pixels. */
+:root{
+  --type-h1:clamp(3.5rem,calc(2.245rem + 6.275vw),4.5rem);
+  --type-h2:clamp(2.125rem,calc(1.968rem + .784vw),2.25rem);
+  --type-h3:1.125rem;
+  --type-body:1rem;
+  --type-nav:1rem;
+  --type-button:.875rem;
+  --type-label:.75rem;
+  --type-help:.875rem;
+  --type-arrow:16px;
+}
+@media(min-width:576px){:root{
+  --type-h1:clamp(3.75rem,calc(1.488rem + 6.283vw),4.5rem);
+  --type-h2:2.5rem;
+}}
+@media(min-width:768px){:root{
+  --type-h1:clamp(4.75rem,calc(3.028rem + 3.587vw),5.25rem);
+  --type-h2:2.75rem;
+  --type-button:.9375rem;
+  --type-arrow:20px;
+}}
+@media(min-width:992px){:root{
+  --type-h1:clamp(5.25rem,calc(2.854rem + 3.865vw),5.75rem);
+  --type-h2:3rem;
+  --type-h3:1.25rem;
+}}
+@media(min-width:1200px){:root{
+  --type-h1:clamp(6rem,calc(3.595rem + 3.206vw),7rem);
+  --type-h2:3.5rem;
+  --type-h3:1.375rem;
+  --type-body:1.0625rem;
+  --type-button:1rem;
+}}
+@media(min-width:1700px){:root{
+  --type-h1:clamp(7.5rem,calc(3.636rem + 3.636vw),8rem);
+  --type-h2:4rem;
+  --type-h3:1.5rem;
+  --type-body:1.125rem;
+  --type-label:.8125rem;
+}}
+@media(orientation:landscape) and (max-height:500px) and (max-width:991.98px){
+  :root{--type-h1:clamp(3rem,6.3vw,3.5rem)}
+}
+
+html{font-size:100%}
+body{font-family:Arial,Helvetica,sans-serif;font-size:var(--type-body);line-height:1.6}
+.hero h1{font-family:Cervino,Impact,sans-serif;font-size:var(--type-h1);line-height:1;letter-spacing:.01em}
+h2,.about-copy h2,.faq h2,.start h2{font-family:Cervino,Impact,sans-serif;font-size:var(--type-h2);line-height:1.1;letter-spacing:.01em}
+.training-card h3,.process h3{font-family:Next,Arial,sans-serif;font-size:var(--type-h3);font-weight:700;line-height:1.25}
+.hero-copy,.section-heading>p,.training-card p,.about-copy>p:not(.eyebrow):not(.intro),.process p,details p,.start-copy>p:not(.eyebrow){font-size:var(--type-body);line-height:1.6;max-width:65ch}
+.about-copy .intro{font-size:calc(var(--type-body) + .125rem);line-height:1.5}
+.header nav{font-size:var(--type-nav);line-height:1.4}
+.header nav>a{display:flex;align-items:center}
+.header .nav-cta,.button,.choose,.text-link{font-size:var(--type-button);line-height:1.4}
+.menu-toggle{font-size:.875rem;line-height:1.4}
+.header nav>a,.button,.choose,.menu-toggle{min-height:44px}
+.text-link{align-items:center;min-height:44px}
+.choose .icon,.button .icon,.text-link .icon,.nav-cta .icon,.gallery-photo .icon,.video-label .icon,.hero-bottom .icon,footer a .icon{width:var(--type-arrow);height:var(--type-arrow)}
+.choose>span{display:inline-flex;align-items:center;justify-content:center;line-height:1}
+.eyebrow,.hero .eyebrow,.process-grid article>span,legend,.field,.card-num{font-size:var(--type-label);line-height:1.4}
+.eyebrow,.hero .eyebrow{letter-spacing:.1em}
+.side-note,.faq-note,.form-note,.demo-badge,.gallery-foot,footer p,#viewer-caption{font-size:var(--type-help);line-height:1.5}
+.principles span{font-size:var(--type-label);line-height:1.5}
+.principles b{font-size:var(--type-help)}
+.photo-caption,.gallery-photo>span,.video-label{font-size:.75rem;line-height:1.5;letter-spacing:.04em}
+.photo-caption{max-width:100%}
+.gallery-photo>span{align-items:center;gap:8px}
+.video-label b{font-size:.875rem;line-height:1.4}
+.gallery-foot{flex-wrap:wrap;gap:12px}
+.gallery-foot span:first-child{max-width:65ch}
+summary{font-size:var(--type-body);line-height:1.5}
+.field input{font-size:1rem;line-height:1.6;min-height:44px}
+.program-options span{font-size:.875rem;line-height:1.4;min-height:44px;display:flex;align-items:center}
+.hero-bottom{font-size:.75rem;line-height:1.4}
+footer>a:not(.brand),footer small{font-size:.75rem;line-height:1.5}
+.viewer-top,.viewer-top button,.viewer-bottom button{font-size:.875rem;line-height:1.4}
+.viewer-top button,.viewer-bottom button{min-height:44px}
+@media(min-width:768px){
+  .training-card h3,.process h3{min-height:2.5em}
+  .training-card{min-height:390px}
+}

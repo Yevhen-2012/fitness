@@ -1,6 +1,6 @@
 import { readFile, access } from 'node:fs/promises';
 const html=await readFile(new URL('./index.html',import.meta.url),'utf8');
-const css=await readFile(new URL('./style.css',import.meta.url),'utf8');
+const css=(await Promise.all(['style.css','typography.css'].map(file=>readFile(new URL(file,import.meta.url),'utf8')))).join('\n');
 const js=await readFile(new URL('./app.js',import.meta.url),'utf8');
 const refs=new Set([...html.matchAll(/(?:src|href|data-photo)="([^"#]+)"/g)].map(match=>match[1]).filter(ref=>!/^https?:/.test(ref)));
 for(const match of css.matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g))refs.add(match[1]);
