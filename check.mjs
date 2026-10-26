@@ -1,7 +1,9 @@
 import { readFile, access } from 'node:fs/promises';
+import { Script } from 'node:vm';
 const html=await readFile(new URL('./index.html',import.meta.url),'utf8');
-const css=(await Promise.all(['style.css','typography.css'].map(file=>readFile(new URL(file,import.meta.url),'utf8')))).join('\n');
-const js=await readFile(new URL('./app.js',import.meta.url),'utf8');
+const css=(await Promise.all(['style.css','typography.css','assets/assistant.css'].map(file=>readFile(new URL(file,import.meta.url),'utf8')))).join('\n');
+const sources=await Promise.all(['app.js','assets/assistant.js'].map(async file=>{const source=await readFile(new URL(file,import.meta.url),'utf8');new Script(source,{filename:file});return source;}));
+const js=sources.join('\n');
 const refs=new Set([...html.matchAll(/(?:src|href|data-photo)="([^"#]+)"/g)].map(match=>match[1]).filter(ref=>!/^https?:/.test(ref)));
 for(const match of css.matchAll(/url\(['"]?([^'"\)]+)['"]?\)/g))refs.add(match[1]);
 for(const match of js.matchAll(/['"](assets\/[^'"]+)['"]/g))refs.add(match[1]);
