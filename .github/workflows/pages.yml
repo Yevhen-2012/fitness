@@ -1,4 +1,4 @@
-name: Publish standard Webflow export
+name: Publish Fitness landing
 
 on:
   push:
@@ -21,10 +21,12 @@ jobs:
     steps:
       - uses: actions/checkout@v6
       - uses: actions/configure-pages@v5
-      - name: Prepare unmodified static assets
+      - name: Check local resources
+        run: node check.mjs
+      - name: Prepare static landing
         run: |
           mkdir _site
-          cp -R index.html about.html css js fonts images videos .nojekyll _site/
+          cp -R index.html about.html 404.html style.css app.js assets .nojekyll _site/
       - uses: actions/upload-pages-artifact@v4
         with:
           path: _site
