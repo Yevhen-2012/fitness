@@ -211,3 +211,8 @@ summary>span{flex-shrink:0}
 #viewer-content.photo-mode{touch-action:pan-y pinch-zoom}
 #viewer-content.photo-mode img{-webkit-user-select:none;user-select:none}
 @media(prefers-reduced-motion:reduce){html{scroll-behavior:auto}*,*:before,*:after{transition:none!important;animation:none!important}}
+
+@media (min-width: 992px) {
+  .hero-photo { right: 8%; bottom: 0; }
+  .hero-photo img { transform: scale(1.2); transform-origin: right bottom; }
+}
