@@ -27,7 +27,7 @@ summary>span{flex-shrink:0}
   .hero{height:720px}
   .hero h1{font-size:88px}
   .hero-content{padding-left:6%;width:65%}
-  .hero-photo{width:115%;right:-37%;bottom:80px}
+  .hero-photo{width:115%;right:-26%;bottom:80px}
   .hero-content .text-link{display:table;margin:20px 0 0}
   .section{padding:70px 6%}
   .training-card{padding:35px 22px 23px}
@@ -171,7 +171,7 @@ summary>span{flex-shrink:0}
   .hero-copy{font-size:14px}
   .hero-content .button{padding:14px 18px;min-height:50px;gap:20px}
   .hero-content .text-link{display:none}
-  .hero-photo{width:102%;height:86%;right:-32%;bottom:50px}
+  .hero-photo{width:102%;height:86%;right:-22%;bottom:50px}
   .hero-bottom{height:50px;left:6%;right:6%}
   .hero-watermark{font-size:130px;top:25px;letter-spacing:-8px}
   .portrait-wrap{width:min(100%,440px);height:510px;justify-self:center}
